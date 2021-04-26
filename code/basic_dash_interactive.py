@@ -44,7 +44,7 @@ controls = dbc.Card(
         ),
     ],
     body = True, 
-    color='dark'
+    #color='dark'
 )
 
 # This method simply plots the amount of collisions in each borough
