@@ -15,7 +15,7 @@ app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
 
 # Initial dataframe prep
 #df = pd.read_csv("../data/Motor_Vehicle_Collisions_-_Crashes.csv",low_memory=False)
-df = pd.read_csv("https://data.cityofnewyork.us/api/views/h9gi-nx95/rows.csv?accesType=DOWNLOAD") #download it directly from url, needed when hosting
+df = pd.read_csv("https://data.cityofnewyork.us/api/views/h9gi-nx95/rows.csv?accesType=DOWNLOAD", low_memory=False) #download it directly from url, needed when hosting
 df['CRASH DATE'] = pd.to_datetime(df['CRASH DATE'])
 df['CRASH TIME'] = pd.to_datetime(df['CRASH TIME'])
 available_years = np.sort(df['CRASH DATE'].dt.year.unique())[:-1]
