@@ -1,0 +1,1 @@
+web: gunicorn code/basic-dash-interactive:server

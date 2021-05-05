@@ -12,6 +12,7 @@ import json
 # app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
+server = app.server
 
 # Initial dataframe prep
 #df = pd.read_csv("../data/Motor_Vehicle_Collisions_-_Crashes.csv",low_memory=False)
