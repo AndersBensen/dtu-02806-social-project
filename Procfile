@@ -1,1 +1,1 @@
-web: gunicorn code/basic-dash-interactive:server
+web: gunicorn app:server

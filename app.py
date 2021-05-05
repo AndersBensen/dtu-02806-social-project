@@ -91,7 +91,7 @@ def bar_borough_collisions():
 
 # A choropleth map 
 def borough_choropleth(): 
-    with open ('../data/nyu-2451-34490-geojson.json') as f:
+    with open ('data/nyu-2451-34490-geojson.json') as f:
         boroughs = json.load(f) 
     bnames = []
     ids = []
