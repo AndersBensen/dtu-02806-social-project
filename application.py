@@ -12,13 +12,13 @@ import json
 # app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
-server = app.server
+application = app.server
 
 # Initial dataframe prep
-#df = pd.read_csv("../data/Motor_Vehicle_Collisions_-_Crashes.csv",low_memory=False)
-df = pd.read_csv("https://data.cityofnewyork.us/api/views/h9gi-nx95/rows.csv?accesType=DOWNLOAD", low_memory=False) #download it directly from url, needed when hosting
-df['CRASH DATE'] = pd.to_datetime(df['CRASH DATE'])
-df['CRASH TIME'] = pd.to_datetime(df['CRASH TIME'])
+df = pd.read_csv("data/Motor_Vehicle_Collisions_-_Crashes.csv",low_memory=False)
+#df = pd.read_csv("https://data.cityofnewyork.us/api/views/h9gi-nx95/rows.csv?accesType=DOWNLOAD", low_memory=False) #download it directly from url, needed when hosting
+df['CRASH DATE'] = pd.to_datetime(df['CRASH DATE'], format="%m/%d/%Y")
+#df['CRASH TIME'] = pd.to_datetime(df['CRASH TIME'], format="%H:%M").dt.time
 available_years = np.sort(df['CRASH DATE'].dt.year.unique())[:-1]
 radio_buttons = ['TOTAL COLLISIONS','NUMBER OF PERSONS INJURED','NUMBER OF PERSONS KILLED', 'NUMBER OF PEDESTRIANS INJURED',
 'NUMBER OF PEDESTRIANS KILLED','NUMBER OF CYCLIST INJURED','NUMBER OF CYCLIST KILLED','NUMBER OF MOTORIST INJURED','NUMBER OF MOTORIST KILLED']
@@ -228,4 +228,4 @@ app.layout = dbc.Container(
 )
 
 if __name__ == '__main__':
-    app.run_server(debug=False)
+    app.run_server(debug=False, host='0.0.0.0', port='8080')
