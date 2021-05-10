@@ -75,27 +75,18 @@ def covid19_nyc_fig():
     return fig
 
 def ml_not_merged_fig(): 
-    df_nmerged = pd.read_csv("data/ml_data_merged.csv")
-    time = df_nmerged['time']
-    y_test = df_nmerged['y_test']
-    y_predicted = df_nmerged['y_predicted']
-    fig = px.scatter(x=time, y=[y_test, y_predicted], labels={'x': 'Collision dates', 'value': 'Amount of collisions'},
+    df_nmerged = pd.read_csv("data/ml_data_not_merged.csv")
+    fig = px.scatter(data_frame=df_nmerged, x='Date', y=['Collisions','Predicted collisions'], labels={'x': 'Collision dates', 'value': 'Amount of collisions'},
         title="Actual and predicted amount of vehicle collisions plotted versus dates. RMSE of: " + 
-        str(2482.82))
-    fig.data[0].name ='Actual amount of collisions'
-    fig.data[1].name ='Predicted amount of collisions'
+        str(40.5))
+
     return fig
 
 def ml_merged_fig(): 
     df_merged = pd.read_csv("data/ml_data_merged.csv")
-    time = df_merged['time']
-    y_test = df_merged['y_test']
-    y_predicted = df_merged['y_predicted']
-    fig = px.scatter(x=time, y=[y_test, y_predicted], labels={'x': 'Collision dates', 'value': 'Amount of collisions'},
+    fig = px.scatter(data_frame=df_merged, x='Date', y=['Collisions','Predicted collisions'], labels={'x': 'Collision dates', 'value': 'Amount of collisions'},
         title="Actual and predicted amount of vehicle collisions plotted versus dates, merged dataset. RMSE of: " + 
-        str(2025.48))
-    fig.data[0].name ='Actual amount of collisions'
-    fig.data[1].name ='Predicted amount of collisions'
+        str(34.95))
 
     return fig 
 
@@ -212,23 +203,21 @@ app.layout = dbc.Container(
             #Machine learning 
             html.Hr(), 
             dcc.Markdown(children=text.markdown_text),
-            # dbc.Row(
-            #     [
-            #         dbc.Col(dcc.Graph(id="covid19_nyc_cases1",figure=ml_not_merged_fig)),
-            #     ],
-            #     align="center",
-            # ),
-            dcc.Markdown(children=text.markdown_text),
-            # dbc.Row(
-            #     [
-            #         dbc.Col(dcc.Graph(id="covid19_nyc_cases2",figure=ml_merged_fig)),
-            #     ],
-            #     align="center",
-            # ),
-            dcc.Markdown(children=text.markdown_text),
+            dbc.Row(
+                [
+                    dbc.Col(dcc.Graph(id="covid19_nyc_cases1",figure=ml_not_merged_fig())),
+                ],
+                align="center",
+            ),
             dbc.Row(
                 [
                     dbc.Col(dcc.Graph(id="covid19_nyc_cases3",figure=covid19_nyc_fig())),
+                ],
+                align="center",
+            ),
+            dbc.Row(
+                [
+                    dbc.Col(dcc.Graph(id="covid19_nyc_cases2",figure=ml_merged_fig())),
                 ],
                 align="center",
             ),
