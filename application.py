@@ -6,11 +6,13 @@ import dash_bootstrap_components as dbc
 import plotly.express as px
 import pandas as pd
 import numpy as np 
+import markdown_text as text 
 import json 
+import time 
 
 # external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 # app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
-
+start = time.time()
 app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
 application = app.server
 
@@ -18,29 +20,11 @@ application = app.server
 df = pd.read_csv("data/Motor_Vehicle_Collisions_-_Crashes.csv",low_memory=False)
 #df = pd.read_csv("https://data.cityofnewyork.us/api/views/h9gi-nx95/rows.csv?accesType=DOWNLOAD", low_memory=False) #download it directly from url, needed when hosting
 df['CRASH DATE'] = pd.to_datetime(df['CRASH DATE'], format="%m/%d/%Y")
-#df['CRASH TIME'] = pd.to_datetime(df['CRASH TIME'], format="%H:%M").dt.time
+df['CRASH TIME'] = pd.to_datetime(df['CRASH TIME'], format="%H:%M")
+
 available_years = np.sort(df['CRASH DATE'].dt.year.unique())[:-1]
 radio_buttons = ['TOTAL COLLISIONS','NUMBER OF PERSONS INJURED','NUMBER OF PERSONS KILLED', 'NUMBER OF PEDESTRIANS INJURED',
 'NUMBER OF PEDESTRIANS KILLED','NUMBER OF CYCLIST INJURED','NUMBER OF CYCLIST KILLED','NUMBER OF MOTORIST INJURED','NUMBER OF MOTORIST KILLED']
-
-# Markdown text
-markdown_text = '''
-&nbsp;
-&nbsp;
-&nbsp;
-### Dash and Markdown
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla non mollis dolor. Fusce ultricies maximus velit, id laoreet ex condimentum eu. Suspendisse fermentum magna id placerat ultrices. Mauris viverra, diam in volutpat ullamcorper, eros arcu vestibulum purus, ornare tempus urna purus eu dui. Proin a diam dolor. Proin sagittis molestie felis, et imperdiet nisl. Mauris posuere velit nulla. Phasellus rutrum tortor nec erat pellentesque dapibus. Pellentesque massa eros, ornare a turpis vel, gravida ultrices dui. Nulla posuere aliquet lorem nec tincidunt. Suspendisse rhoncus fermentum sem. Vivamus feugiat neque ut magna tincidunt, a dapibus metus porta. Integer ac neque vitae felis ultrices efficitur sed in quam.
-
-Vestibulum aliquet porttitor metus, eget eleifend nulla laoreet a. Curabitur semper ipsum turpis, eu finibus ipsum faucibus vel. Fusce vel velit urna. Aliquam sodales rhoncus erat eu tempus. Proin blandit sapien vitae ipsum placerat suscipit. Vivamus semper aliquam laoreet. Nam bibendum tristique sem, eget porttitor turpis dictum sit amet. Aliquam congue tortor leo, et elementum enim accumsan et. Fusce in enim quis sem lacinia convallis. Fusce viverra ex nec odio auctor elementum. Suspendisse quis gravida nunc, et pretium dolor. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vivamus vel blandit erat, vel varius risus. Donec quam nisi, facilisis ac purus quis, consequat aliquet nunc.
-&nbsp;
-'''
-
-markdown_text2 = '''
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla non mollis dolor. Fusce ultricies maximus velit, id laoreet ex condimentum eu. Suspendisse fermentum magna id placerat ultrices. Mauris viverra, diam in volutpat ullamcorper, eros arcu vestibulum purus, ornare tempus urna purus eu dui. Proin a diam dolor. Proin sagittis molestie felis, et imperdiet nisl. Mauris posuere velit nulla. Phasellus rutrum tortor nec erat pellentesque dapibus. Pellentesque massa eros, ornare a turpis vel, gravida ultrices dui. Nulla posuere aliquet lorem nec tincidunt. Suspendisse rhoncus fermentum sem. Vivamus feugiat neque ut magna tincidunt, a dapibus metus porta. Integer ac neque vitae felis ultrices efficitur sed in quam.
-
-Vestibulum aliquet porttitor metus, eget eleifend nulla laoreet a. Curabitur semper ipsum turpis, eu finibus ipsum faucibus vel. Fusce vel velit urna. Aliquam sodales rhoncus erat eu tempus. Proin blandit sapien vitae ipsum placerat suscipit. Vivamus semper aliquam laoreet. Nam bibendum tristique sem, eget porttitor turpis dictum sit amet. Aliquam congue tortor leo, et elementum enim accumsan et. Fusce in enim quis sem lacinia convallis. Fusce viverra ex nec odio auctor elementum. Suspendisse quis gravida nunc, et pretium dolor. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vivamus vel blandit erat, vel varius risus. Donec quam nisi, facilisis ac purus quis, consequat aliquet nunc.
-&nbsp;
-'''
 
 # This is a variable which contains the dropdown of the heatmap
 controls = dbc.Card(
@@ -82,6 +66,38 @@ controls = dbc.Card(
     body = True, 
     #color='dark'
 )
+
+def covid19_nyc_fig(): 
+    df_covid = pd.read_csv("data/NYC_covid19_filtered_file.csv")
+    df_covid['DATE_OF_INTEREST'] = pd.to_datetime(df_covid['DATE_OF_INTEREST'])
+    fig = px.line(x=df_covid['DATE_OF_INTEREST'], y=df_covid['CASE_COUNT'],labels={'x': 'Dates', 'y': 'Amount of COVID19 cases'}, 
+        title="Confirmed COVID19 cases in NYC plotted versus dates in 2020")
+    return fig
+
+def ml_not_merged_fig(): 
+    df_nmerged = pd.read_csv("data/ml_data_merged.csv")
+    time = df_nmerged['time']
+    y_test = df_nmerged['y_test']
+    y_predicted = df_nmerged['y_predicted']
+    fig = px.scatter(x=time, y=[y_test, y_predicted], labels={'x': 'Collision dates', 'value': 'Amount of collisions'},
+        title="Actual and predicted amount of vehicle collisions plotted versus dates. RMSE of: " + 
+        str(2482.82))
+    fig.data[0].name ='Actual amount of collisions'
+    fig.data[1].name ='Predicted amount of collisions'
+    return fig
+
+def ml_merged_fig(): 
+    df_merged = pd.read_csv("data/ml_data_merged.csv")
+    time = df_merged['time']
+    y_test = df_merged['y_test']
+    y_predicted = df_merged['y_predicted']
+    fig = px.scatter(x=time, y=[y_test, y_predicted], labels={'x': 'Collision dates', 'value': 'Amount of collisions'},
+        title="Actual and predicted amount of vehicle collisions plotted versus dates, merged dataset. RMSE of: " + 
+        str(2025.48))
+    fig.data[0].name ='Actual amount of collisions'
+    fig.data[1].name ='Predicted amount of collisions'
+
+    return fig 
 
 # This method simply plots the amount of collisions in each borough
 def bar_borough_collisions(): 
@@ -165,36 +181,60 @@ app.layout = dbc.Container(
         }),
         html.Div([
             #html.H1("Blabla header"),
-            dcc.Markdown(children=markdown_text),  
+            dcc.Markdown(children=text.markdown_text),  
             html.Hr(), 
-            dcc.Markdown(children=markdown_text),  
+            dcc.Markdown(children=text.markdown_text),  
             dbc.Row(
                 [
                     dbc.Col(dcc.Graph(id="borough-choropleth",figure=borough_choropleth())),
                 ]
             ),
-            dcc.Markdown(children=markdown_text2),
+            dcc.Markdown(children=text.markdown_text2),
             #html.H1("Blabla header"),
             html.Hr(), 
-            dcc.Markdown(children=markdown_text),  
+            dcc.Markdown(children=text.markdown_text),  
             dbc.Row(
                 [
                     dbc.Col(dcc.Graph(id="borough-collisions",figure=bar_borough_collisions())),
                 ]
             ),
-            dcc.Markdown(children=markdown_text2),
+            dcc.Markdown(children=text.markdown_text2),
             #html.H1("Blabla header"), 
             html.Hr(),
             dbc.Row(
                 [
-                    dbc.Col(dcc.Markdown(children=markdown_text), width=6),
+                    dbc.Col(dcc.Markdown(children=text.markdown_text), width=6),
                     dbc.Col(dcc.Graph(id="borough-collisions2",figure=bar_borough_collisions()), width=6),
                 ],
                 align="center",
             ),
-            #html.H1("Blabla header"), 
+            #html.H1("Blabla header"),
+            #Machine learning 
+            html.Hr(), 
+            dcc.Markdown(children=text.markdown_text),
+            # dbc.Row(
+            #     [
+            #         dbc.Col(dcc.Graph(id="covid19_nyc_cases1",figure=ml_not_merged_fig)),
+            #     ],
+            #     align="center",
+            # ),
+            dcc.Markdown(children=text.markdown_text),
+            # dbc.Row(
+            #     [
+            #         dbc.Col(dcc.Graph(id="covid19_nyc_cases2",figure=ml_merged_fig)),
+            #     ],
+            #     align="center",
+            # ),
+            dcc.Markdown(children=text.markdown_text),
+            dbc.Row(
+                [
+                    dbc.Col(dcc.Graph(id="covid19_nyc_cases3",figure=covid19_nyc_fig())),
+                ],
+                align="center",
+            ),
+            #Interactive heatmap
             html.Hr(),
-            dcc.Markdown(children=markdown_text),
+            dcc.Markdown(children=text.markdown_text),
             html.Div(
                 [
                     dbc.Row(
@@ -213,19 +253,17 @@ app.layout = dbc.Container(
                     'margin-right': '-42.5vw'
                 }
             ),
-            dcc.Markdown(children=markdown_text2),
+            dcc.Markdown(children=text.markdown_text2),
         ], style={
             'width':'60%', 
             'margin':'auto'
             }
         )
     ],
-    fluid = True,
-    # style = {
-    #     'background-image': 'url(https://upload.wikimedia.org/wikipedia/commons/2/22/North_Star_-_invitation_background.png)'
-    #     'backgroundColor': '#111111'
-    #     },
+    fluid = True
 )
 
+end = time.time()
+print("launch time: "+str(end-start))
 if __name__ == '__main__':
     app.run_server(debug=False, host='0.0.0.0', port='8080')
