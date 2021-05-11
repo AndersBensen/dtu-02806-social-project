@@ -6,9 +6,13 @@ import dash_bootstrap_components as dbc
 import plotly.express as px
 import pandas as pd
 import numpy as np 
-import markdown_text as text 
 import json 
 import time 
+
+
+import markdown_text as text 
+import ml_figures as ml_fig
+import basic_stats_figures as basic_fig
 
 # external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 # app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
@@ -21,6 +25,9 @@ df = pd.read_csv("data/Motor_Vehicle_Collisions_-_Crashes.csv",low_memory=False)
 #df = pd.read_csv("https://data.cityofnewyork.us/api/views/h9gi-nx95/rows.csv?accesType=DOWNLOAD", low_memory=False) #download it directly from url, needed when hosting
 df['CRASH DATE'] = pd.to_datetime(df['CRASH DATE'], format="%m/%d/%Y")
 df['CRASH TIME'] = pd.to_datetime(df['CRASH TIME'], format="%H:%M")
+
+boroughs = df['BOROUGH'].unique()
+boroughs = boroughs[1:]
 
 available_years = np.sort(df['CRASH DATE'].dt.year.unique())[:-1]
 radio_buttons = ['TOTAL COLLISIONS','NUMBER OF PERSONS INJURED','NUMBER OF PERSONS KILLED', 'NUMBER OF PEDESTRIANS INJURED',
@@ -66,29 +73,6 @@ controls = dbc.Card(
     body = True, 
     #color='dark'
 )
-
-def covid19_nyc_fig(): 
-    df_covid = pd.read_csv("data/NYC_covid19_filtered_file.csv")
-    df_covid['DATE_OF_INTEREST'] = pd.to_datetime(df_covid['DATE_OF_INTEREST'])
-    fig = px.line(x=df_covid['DATE_OF_INTEREST'], y=df_covid['CASE_COUNT'],labels={'x': 'Dates', 'y': 'Amount of COVID19 cases'}, 
-        title="Confirmed COVID19 cases in NYC plotted versus dates in 2020")
-    return fig
-
-def ml_not_merged_fig(): 
-    df_nmerged = pd.read_csv("data/ml_data_not_merged.csv")
-    fig = px.scatter(data_frame=df_nmerged, x='Date', y=['Collisions','Predicted collisions'], labels={'x': 'Collision dates', 'value': 'Amount of collisions'},
-        title="Actual and predicted amount of vehicle collisions plotted versus dates. RMSE of: " + 
-        str(40.5))
-
-    return fig
-
-def ml_merged_fig(): 
-    df_merged = pd.read_csv("data/ml_data_merged.csv")
-    fig = px.scatter(data_frame=df_merged, x='Date', y=['Collisions','Predicted collisions'], labels={'x': 'Collision dates', 'value': 'Amount of collisions'},
-        title="Actual and predicted amount of vehicle collisions plotted versus dates, merged dataset. RMSE of: " + 
-        str(34.95))
-
-    return fig 
 
 # This method simply plots the amount of collisions in each borough
 def bar_borough_collisions(): 
@@ -171,59 +155,80 @@ app.layout = dbc.Container(
             'height': '950px',
         }),
         html.Div([
-            #html.H1("Blabla header"),
-            dcc.Markdown(children=text.markdown_text),  
-            html.Hr(), 
-            dcc.Markdown(children=text.markdown_text),  
+            ### INTRODUCTION ### 
+            html.Hr(),
+            dcc.Markdown(children=text.intro_markdown),
             dbc.Row(
                 [
                     dbc.Col(dcc.Graph(id="borough-choropleth",figure=borough_choropleth())),
                 ]
             ),
-            dcc.Markdown(children=text.markdown_text2),
-            #html.H1("Blabla header"),
+            dcc.Markdown(children=text.intro_post_choro),
+            ### BASIC STATS ###
             html.Hr(), 
-            dcc.Markdown(children=text.markdown_text),  
+            dcc.Markdown(children=text.bs_intro_markdown),
             dbc.Row(
                 [
-                    dbc.Col(dcc.Graph(id="borough-collisions",figure=bar_borough_collisions())),
+                    dbc.Col(dcc.Graph(id="basic-stat-6",figure=basic_fig.persons_killed_per_collision_figure(df,boroughs)), width=6),
+                    dbc.Col(dcc.Graph(id="basic-stat-1",figure=basic_fig.persons_injuried_per_collisions_figure(boroughs)), width=6),
+                ],
+            ),
+            dcc.Markdown(children=text.bs_intro_post_markdown),
+            dbc.Row(
+                [
+                    dbc.Col(dcc.Graph(id="basic-stat-4",figure=basic_fig.cyclist_injured_per_collision_fig(boroughs)), width=4),
+                    dbc.Col(dcc.Graph(id="basic-stat-5",figure=basic_fig.pedestrian_injured_per_collision_fig(boroughs)), width=4),
+                    dbc.Col(dcc.Graph(id="basic-stat-3",figure=basic_fig.motorist_injured_per_collision_fig(boroughs)), width=4),
+                ],
+            ),
+            #dcc.Markdown(children=text.bs_percentage_post_markdown),
+            # dbc.Row(
+            #     [
+            #         dbc.Col(dcc.Graph(id="basic-stat-3",figure=basic_fig.motorist_injured_per_collision_fig(boroughs)), width=6),
+            #     ]
+            # ),
+            dcc.Markdown(children=text.bs_months_pre_markdown),
+            dbc.Row(
+                [
+                    dbc.Col(dcc.Graph(id="basic-stat-7",figure=basic_fig.month_collisions_fig(df))),
                 ]
             ),
-            dcc.Markdown(children=text.markdown_text2),
-            #html.H1("Blabla header"), 
-            html.Hr(),
+            dcc.Markdown(children=text.bs_months_post_markdown),
             dbc.Row(
                 [
-                    dbc.Col(dcc.Markdown(children=text.markdown_text), width=6),
-                    dbc.Col(dcc.Graph(id="borough-collisions2",figure=bar_borough_collisions()), width=6),
-                ],
-                align="center",
+                    dbc.Col(dcc.Graph(id="basic-stat-8",figure=basic_fig.hour_collisions_fig(df))),
+                ]
             ),
-            #html.H1("Blabla header"),
-            #Machine learning 
+            dcc.Markdown(children=text.bs_hours_weekly_markdown),
+            ### COVID19 ANALYSIS ### 
             html.Hr(), 
-            dcc.Markdown(children=text.markdown_text),
+            dcc.Markdown(children=text.cv_pre_markdown),
+            ### MACHINE LEARNING ### 
+            html.Hr(), 
+            dcc.Markdown(children=text.ml_intro_markdown),
             dbc.Row(
                 [
-                    dbc.Col(dcc.Graph(id="covid19_nyc_cases1",figure=ml_not_merged_fig())),
+                    dbc.Col(dcc.Graph(id="covid19_nyc_cases1",figure=ml_fig.ml_not_merged_fig())),
                 ],
                 align="center",
             ),
+            dcc.Markdown(children=text.ml_markdown_1),
+            # dbc.Row(
+            #     [
+            #         dbc.Col(dcc.Graph(id="covid19_nyc_cases3",figure=ml_fig.covid19_nyc_fig())),
+            #     ],
+            #     align="center",
+            # ),
             dbc.Row(
                 [
-                    dbc.Col(dcc.Graph(id="covid19_nyc_cases3",figure=covid19_nyc_fig())),
+                    dbc.Col(dcc.Graph(id="covid19_nyc_cases2",figure=ml_fig.ml_merged_fig())),
                 ],
                 align="center",
             ),
-            dbc.Row(
-                [
-                    dbc.Col(dcc.Graph(id="covid19_nyc_cases2",figure=ml_merged_fig())),
-                ],
-                align="center",
-            ),
-            #Interactive heatmap
+            dcc.Markdown(children=text.ml_markdown_2),
+            ### INTERACTIVE HEATMAP ### 
             html.Hr(),
-            dcc.Markdown(children=text.markdown_text),
+            dcc.Markdown(children=text.heatmap_pre_markdown),
             html.Div(
                 [
                     dbc.Row(
@@ -242,7 +247,8 @@ app.layout = dbc.Container(
                     'margin-right': '-42.5vw'
                 }
             ),
-            dcc.Markdown(children=text.markdown_text2),
+            html.Hr(),
+            dcc.Markdown(children=text.heatmap_post_markdown),
         ], style={
             'width':'60%', 
             'margin':'auto'
