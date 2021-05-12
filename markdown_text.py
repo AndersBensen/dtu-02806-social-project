@@ -14,9 +14,15 @@ boroughs in New York City:
 '''
 
 intro_post_choro = '''
-It can be observed from the map that most collisions happens in Brooklyn, followed up by Queens. The place with the fewest collisions is Staten Island. 
-'''
 
+
+
+From the plot we can see that Brooklyn has the most vehicle collisions with around ~ 383k. Queens comes after with ~ 327k, then Manhattan with ~ 285k, 
+Bronx with ~176k and finally staten island with ~ 52k. Brooklyn is also the borough with the biggest population, where Staten Island has the smallest 
+population of all the boroughs [[1]](https://en.wikipedia.org/wiki/Boroughs_of_New_York_City).
+
+
+'''
 
 # BASIC STATS 
 bs_intro_markdown = '''
@@ -31,7 +37,7 @@ the relative danger of collisions in each of the five boroughs. This allows comp
 '''
 
 bs_intro_post_markdown = '''
-The left bar plot shows the amount of persons killed relative to the amount of crashes in each borough. The bottom bar plot shows the amount persons 
+The left bar plot shows the amount of persons killed relative to the amount of crashes in each borough. The right bar plot shows the amount persons 
 injured relative to the amount of crashes in each borough. These statistics are important, given that the plots are made relative to the amount of 
 collisions in each borough making the deaths and injuries comparable across boroughs. This allows the viewer to get an idea of what the outcomes of 
 an average collision in any of the five boroughs of NYC is likely to be.
@@ -41,8 +47,8 @@ are also significantly less deadly than the other boroughs.
 
 The right bar plot shows the same tendency of Manhattan having fewer persons injured per collision. This could be caused by a lower 
 average speed along with higher density of vehicles in Manhattan which would further limit the possibility of speeding. These factors are known to 
-lower deaths in traffic collisions, as illustrated by the National Safety Council: **Speeding was a factor in 26% of all traffic fatalities in 2019**
-
+lower deaths in traffic collisions, as illustrated by the National Safety Council: *Speeding was a factor in 26% of all traffic fatalities in 2019*.
+[[2]](https://injuryfacts.nsc.org/motor-vehicle/motor-vehicle-safety-issues/speeding/) 
 
 
 The following bar plots illustrates the amount of injuries sustained per collision in each borough in three categories; Cyclist, Pedestrian and 
@@ -78,7 +84,7 @@ likely due to many people sleeping during those hours (even in the city that nev
 cv_pre_markdown = '''
 &nbsp;
 &nbsp;
-### The impact of COVID19 on vehicle collisions
+### COVID19 and vehicle colissions
 yesfuuf
 
 '''
@@ -99,8 +105,8 @@ The data we are prediction upon is restriced to 2020, so we later can predict on
 When doing Machine Learning we need to define what our input data is (called features). Features are what we want to predict based on, and choosing these 
 are very important for how well your model performs. To be able to predict how many collisions there are on a given day we will use the following features: 
 **persons injured**, **cyclists injured**, **motorists injured**, **day** and **month**. These features both give us an in insight into how many were 
-injured but also the timespatial aspect of the data. As what we want to predict is an continuous variable, we will use a linear regression model. 
-A specific part of the data is choose to test the model and see how well it performs, and the result can be seen in below figure: 
+injured but also the time aspect of the data. As what we want to predict is an continuous variable, we will use a linear regression model. 
+A specific part of the data is choosen to test the model and see how well it performs, and the result can be seen in below figure: 
 '''
 
 ml_markdown_1 = '''

@@ -27,7 +27,7 @@ df['CRASH DATE'] = pd.to_datetime(df['CRASH DATE'], format="%m/%d/%Y")
 df['CRASH TIME'] = pd.to_datetime(df['CRASH TIME'], format="%H:%M")
 
 boroughs = df['BOROUGH'].unique()
-boroughs = boroughs[1:]
+boroughs = sorted(boroughs[1:])
 
 available_years = np.sort(df['CRASH DATE'].dt.year.unique())[:-1]
 radio_buttons = ['TOTAL COLLISIONS','NUMBER OF PERSONS INJURED','NUMBER OF PERSONS KILLED', 'NUMBER OF PEDESTRIANS INJURED',

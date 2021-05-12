@@ -1,17 +1,17 @@
 import plotly.express as px
 import pandas as pd
 
-person_killed_per_crash_borough = []
-person_injured_per_crash_borough = []
+person_killed_per_crash_borough = None
+person_injured_per_crash_borough = None
 
-cyclist_injured_per_collision_borough = []
-pedestrian_injured_per_collision_borough = []
-motorist_injured_per_collision_borough = []
+cyclist_injured_per_collision_borough = None
+pedestrian_injured_per_collision_borough = None
+motorist_injured_per_collision_borough = None
 
 
 def persons_injuried_per_collisions_figure(bos):
-    fig = px.bar(x=bos, y=person_injured_per_crash_borough, title='Persons injured per collision in different boroughs', 
-        labels={'x':'Borough', 'y':'Injury per collision','color':''}, color=bos)
+    fig = px.bar(person_injured_per_crash_borough, title='Persons injured per collision in different boroughs', 
+        labels={'index':'Boroughs', 'value':'Persons injured pr. collision', 'color':''}, color=bos)
     fig.update_layout(
         legend=dict(
             orientation="h",
@@ -26,9 +26,9 @@ def persons_injuried_per_collisions_figure(bos):
     return fig 
     
 def persons_killed_per_collision_figure(df,boroughs): 
-    fill_maps(df, boroughs) 
-    fig = px.bar(x=boroughs, y=person_killed_per_crash_borough, title='Persons killed per collision in different boroughs', 
-        labels={'x':'Borough', 'y':'Killed per collision','color':''}, color=boroughs)
+    fill_maps2(df, boroughs) 
+    fig = px.bar(person_killed_per_crash_borough, title='Persons killed per collision in different boroughs', 
+        labels={'index':'Boroughs', 'value':'Persons killed pr. collision', 'color':''}, color=boroughs)
     fig.update_layout(
         legend=dict(
             orientation="h",
@@ -43,8 +43,8 @@ def persons_killed_per_collision_figure(df,boroughs):
     return fig 
 
 def cyclist_injured_per_collision_fig(boroughs): 
-    fig = px.bar(x=boroughs, y=cyclist_injured_per_collision_borough, title='Cyclist injured per collision', 
-        labels={'x':'', 'y':'Injury per collision','color':''}, color=boroughs)
+    fig = px.bar(cyclist_injured_per_collision_borough, title='Cyclist injured per collision', 
+        labels={'index':'', 'value':'Cyclist injured pr. collision', 'color':''}, color=boroughs)
     fig.update_layout(
         legend=dict(
             # orientation="h",
@@ -59,8 +59,8 @@ def cyclist_injured_per_collision_fig(boroughs):
     return fig 
 
 def motorist_injured_per_collision_fig(boroughs): 
-    fig = px.bar(x=boroughs, y=motorist_injured_per_collision_borough, title='Motorists injured per collision', 
-        labels={'x':'', 'y':'','color':''}, color=boroughs)
+    fig = px.bar(motorist_injured_per_collision_borough, title='Motorists injured per collision', 
+        labels={'index':'', 'value':'','color':''}, color=boroughs)
     fig.update_layout(
         legend=dict(
             # orientation="h",
@@ -75,8 +75,8 @@ def motorist_injured_per_collision_fig(boroughs):
     return fig 
 
 def pedestrian_injured_per_collision_fig(boroughs):
-    fig = px.bar(x=boroughs, y=pedestrian_injured_per_collision_borough, title='Pedestrians injured per collision', 
-        labels={'x':'Borough', 'y':'','color':''}, color=boroughs)
+    fig = px.bar(pedestrian_injured_per_collision_borough, title='Pedestrians injured per collision', 
+        labels={'index':'Borough', 'value':'', 'color':''}, color=boroughs)
     fig.update_layout(
         legend=dict(
             # orientation="h",
@@ -107,7 +107,7 @@ def hour_collisions_fig(df):
 
     collisions_hoursoftheweek = df.groupby(df['HourOfTheWeek']).size()
 
-    fig = px.bar(collisions_hoursoftheweek, title='Collisions per hour of the week', 
+    fig = px.line(collisions_hoursoftheweek, title='Collisions per hour of the week', 
         labels={'HourOfTheWeek': 'Hours of the week', 'value':'Collisions'}, hover_data={'variable':False})
     fig.update_layout(showlegend=False)
     return fig 
@@ -136,3 +136,28 @@ def fill_maps(df, boroughs):
             df_motorist_injured = df_borough['NUMBER OF MOTORIST INJURED'].sum()
             motorist_injured_borough = df_motorist_injured/len(df_borough)
             motorist_injured_per_collision_borough.append(motorist_injured_borough)
+
+def fill_maps2(df, boroughs): 
+    global person_killed_per_crash_borough
+    global person_injured_per_crash_borough
+    global cyclist_injured_per_collision_borough
+    global pedestrian_injured_per_collision_borough
+    global motorist_injured_per_collision_borough
+    
+    if person_injured_per_crash_borough == None: ## see if maps already are filledd 
+        collisions_borough = df['BOROUGH'].value_counts()
+
+        persons_killed_borough = df.groupby(df['BOROUGH'])['NUMBER OF PERSONS KILLED'].sum()
+        person_killed_per_crash_borough = persons_killed_borough/collisions_borough
+
+        persons_injured_borough = df.groupby(df['BOROUGH'])['NUMBER OF PERSONS INJURED'].sum()
+        person_injured_per_crash_borough = persons_injured_borough/collisions_borough
+
+        cyclist_injured_borough = df.groupby(df['BOROUGH'])['NUMBER OF CYCLIST INJURED'].sum()
+        cyclist_injured_per_collision_borough = cyclist_injured_borough/collisions_borough
+
+        pedestrians_injured_borough = df.groupby(df['BOROUGH'])['NUMBER OF PEDESTRIANS INJURED'].sum()
+        pedestrian_injured_per_collision_borough = pedestrians_injured_borough/collisions_borough
+
+        motorist_injured_borough = df.groupby(df['BOROUGH'])['NUMBER OF MOTORIST INJURED'].sum()
+        motorist_injured_per_collision_borough = motorist_injured_borough/collisions_borough
