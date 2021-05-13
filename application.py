@@ -129,6 +129,11 @@ def update_graph(collision_year, data_type, radius_val):
         fig = px.density_mapbox(dff, lat='LATITUDE', lon='LONGITUDE', z=data_type, radius=radius_val,
                             center=dict(lat=40.730610, lon=-73.935242), zoom=10,
                             mapbox_style="carto-positron", height=800)
+        fig.update_layout(
+            coloraxis_colorbar=dict(
+                title="Amount"
+            )
+        )
     return fig
 
 # We assemble all the parts of the website here

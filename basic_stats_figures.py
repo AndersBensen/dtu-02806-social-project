@@ -44,7 +44,7 @@ def persons_killed_per_collision_figure(df,boroughs):
 
 def cyclist_injured_per_collision_fig(boroughs): 
     fig = px.bar(cyclist_injured_per_collision_borough, title='Cyclist injured per collision', 
-        labels={'index':'', 'value':'Cyclist injured pr. collision', 'color':''}, color=boroughs)
+        labels={'index':'', 'value':'Injured pr. collision by transport', 'color':''}, color=boroughs)
     fig.update_layout(
         legend=dict(
             # orientation="h",
