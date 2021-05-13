@@ -6,9 +6,9 @@ The dataset contains information about injuries and deaths caused by accidents i
 ranges between the years 2012-2021 with 1,765,789 counts and 29 variables. This website sets out to investigate the different patterns which is hidden 
 behind the rather large amount of data, and more specifically it sets out to investigate how COVID-19 has affected the data. NYC was one of the cities 
 which was hit very hard by COVID-19 when it first started spreading around the world in March 2020. We want to explore and show you exactly how much this 
-pandemic has meant for vehicle collisions in a city as busy as the Big Apple. A notebook explaining and showing the code behind the visualizations for 
-this website can be found on nbviewer [here](https://nbviewer.jupyter.org/github/AndersBensen/python_101/blob/main/social_data_explainer_nyc_aac.ipynb). 
-If nbviewer does not render it, it can also be found on google drive [here](https://github.com/AndersBensen/python_101/blob/main/social_data_explainer_nyc_aac.ipynb).
+pandemic has meant for vehicle collisions in a city as busy as the Big Apple. A notebook explaining and showing the code and ideas behind the visualizations for 
+this website can be found on deepnote [here](https://deepnote.com/project/Social-final-project-3g9PpVG0SxGUOlX_mQSFdg/%2Fsocial_data_explainer.ipynb). 
+If nbviewer does not render it, it can also be found on deepnote [here](https://nbviewer.jupyter.org/github/AndersBensen/python_101/blob/main/social_data_explainer_nyc_aac.ipynb).
 
 To get an initial overview of the data a so-called choropleth map is used. The map shows simply how many collisions there have been in each of the 5
 boroughs in New York City: 
