@@ -8,11 +8,13 @@ import pandas as pd
 import numpy as np 
 import json 
 import time 
-
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 
 import markdown_text as text 
 import ml_figures as ml_fig
 import basic_stats_figures as basic_fig
+import covid_figures as cov_fig 
 
 # external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 # app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
@@ -207,8 +209,43 @@ app.layout = dbc.Container(
             dcc.Markdown(children=text.bs_hours_weekly_markdown),
             ### COVID19 ANALYSIS ### 
             html.Hr(), 
-            dcc.Markdown(children=text.cv_pre_markdown),
-            ### MACHINE LEARNING ### 
+            dcc.Markdown(children=text.cov_intro_markdown),
+            dbc.Row(
+                [
+                    dbc.Col(dcc.Graph(id="covid19_nyc_cases3",figure=cov_fig.covid19_nyc_fig(df))),
+                ],
+                align="center",
+            ),
+            dcc.Markdown(children=text.cov_post_intro_markdown),
+            dbc.Row(
+                [
+                    dbc.Col(dcc.Graph(id="covid19_time_incidents",figure=cov_fig.covid19_time_incidents_fig(df))),
+                ],
+                align="center",
+            ),
+            dcc.Markdown(children=text.cov_incidents_post_markdown),
+            dbc.Row(
+                [
+                    dbc.Col(dcc.Graph(id="covid19_time_incidents3",figure=cov_fig.covid_19_incidents_cases_fig(df))),
+                ],
+                align="center",
+            ),
+            dcc.Markdown(children=text.cov_change_post_markdown),
+            dbc.Row(
+                [
+                    dbc.Col(dcc.Graph(id="covid19-killed",figure=cov_fig.covid_19_killed_pr_col_fig(df,boroughs)), width=6),
+                    dbc.Col(dcc.Graph(id="covid19-injured",figure=cov_fig.covid_19_injured_pr_col_fig(df, boroughs)), width=6),
+                ],
+            ),
+            dcc.Markdown(children=text.cov_kills_pre_markdown),
+            dbc.Row(
+                [
+                    dbc.Col(dcc.Graph(id="covid19_crash_factors",figure=cov_fig.covid_19_crashes_factors_fig(df)), width=12),
+                ],
+                justify="center",
+            ),
+            dcc.Markdown(children=text.cov_outro_markdown),
+            ## MACHINE LEARNING 
             html.Hr(), 
             dcc.Markdown(children=text.ml_intro_markdown),
             dbc.Row(
@@ -218,12 +255,6 @@ app.layout = dbc.Container(
                 align="center",
             ),
             dcc.Markdown(children=text.ml_markdown_1),
-            # dbc.Row(
-            #     [
-            #         dbc.Col(dcc.Graph(id="covid19_nyc_cases3",figure=ml_fig.covid19_nyc_fig())),
-            #     ],
-            #     align="center",
-            # ),
             dbc.Row(
                 [
                     dbc.Col(dcc.Graph(id="covid19_nyc_cases2",figure=ml_fig.ml_merged_fig())),
@@ -252,8 +283,9 @@ app.layout = dbc.Container(
                     'margin-right': '-42.5vw'
                 }
             ),
-            html.Hr(),
             dcc.Markdown(children=text.heatmap_post_markdown),
+            html.Hr(),
+            dcc.Markdown(children=text.final_words_markdown),
         ], style={
             'width':'60%', 
             'margin':'auto'
