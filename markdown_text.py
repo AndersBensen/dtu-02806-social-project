@@ -2,13 +2,13 @@
 
 intro_markdown = '''
 Every year the New York Police Department publishes data for every motor vehicle collision in New York City, and has been doing so since 2012. 
-The dataset contains information on injuries and deaths caused by accidents involving cars, bicycles and pedestrians in New York City (NYC). The timespan 
-ranges between the years 2012-2021 with 1,765,789 counts and 29 variables. This website sets out to investigate the different patterns hidden 
+The dataset contains information on vehicle collisions, injuries and deaths caused by accidents involving cars, bicycles and pedestrians in New York City (NYC). The timespan 
+ranges between July 1st 2012 and March 26th 2021 with 1,765,789 counts and 29 variables. This website sets out to investigate the different patterns hidden 
 in the rather large amount of data, and more specifically it sets out to investigate how COVID-19 has affected the data. NYC was one of the cities 
 which was hit very hard by COVID-19 when it first started spreading around the world in March 2020. We want to explore and show you exactly how much this 
 pandemic has meant for vehicle collisions in a city as busy as the Big Apple. A notebook explaining and showing the code and ideas behind the visualizations for 
 this website can be found on deepnote [here](https://deepnote.com/project/Social-final-project-3g9PpVG0SxGUOlX_mQSFdg/%2Fsocial_data_explainer.ipynb). 
-If deepnote does not render it, it can also be found on nbviewer [here](https://nbviewer.jupyter.org/github/AndersBensen/python_101/blob/main/social_data_explainer_nyc_aac.ipynb).
+If deepnote does not render it, it can also be found on nbviewer [here](https://nbviewer.jupyter.org/github/AndersBensen/python_101/blob/main/social_data_explainer_aac.ipynb).
 
 To get an initial overview of the data, a choropleth map is used. The map simply shows how many collisions there have been in each of the 5
 boroughs in New York City:
@@ -36,7 +36,7 @@ the relative danger of collisions in each of the five boroughs. This allows comp
 '''
 
 bs_intro_post_markdown = '''
-The left bar plot shows the amount of persons killed relative to the amount of collisions in each borough. The right bar plot shows the amount persons 
+The left bar plot shows the amount of persons killed relative to the amount of collisions in each borough. The right bar plot shows the amount of persons 
 injured relative to the amount of collisions in each borough. These statistics are important, given that the plots are made relative to the amount of 
 collisions in each borough making the deaths and injuries comparable across boroughs. This allows the viewer to get an idea of what the outcome of 
 an average collision in any of the five boroughs of NYC is likely to be.
@@ -151,16 +151,16 @@ ml_intro_markdown = '''
 &nbsp;
 ### Using Machine Learning to predict collisions  
 
-As it can be seen from the prior analysis there definitely is temporal and geospatial patterns regarding collisions and injuries. 
-We could also see from the COVID-19 investigation, that COVID-19 definitely had an impact on the amount collisions and related fatalities in NYC. 
+As it can be seen from the prior analysis there definitely are temporal and geospatial patterns regarding collisions and injuries. 
+We could also see from the COVID-19 investigation, that COVID-19 definitely had an impact on the amount collisions and related injuries and fatalities in NYC. 
 To further investigate these patterns, we will use a Machine Learning model to see if we can predict how many collisions there is on a given day. 
 Afterward we will try to add COVID-19 data in NYC from the same dates, to see if that can improve the performance of our model. 
-The data we are prediction upon is restriced to 2020, so we later can predict on the same data when merging with the COVID-19 dataset. 
+The data we are predicting upon is restriced to 2020, so we later can predict on the same data when merging with the COVID-19 dataset. 
 
 When doing Machine Learning we need to define what our input data is (called features). Features are what we want to predict based on, and choosing these 
 are very important for how well your model performs. To be able to predict how many collisions there are on a given day we will use the following features: 
 **persons injured**, **cyclists injured**, **motorists injured**, **day** and **month**. These features both give us an in insight into how many were 
-injured but also the time aspect of the data. As what we want to predict is an continuous variable, we will use a linear regression model. 
+injured but also the time aspect of the data. Since what we want to predict is a continuous variable we will use a linear regression model. 
 A specific part of the data is choosen to test the model and see how well it performs, and the result can be seen in below figure: 
 '''
 
@@ -196,15 +196,16 @@ heatmap_pre_markdown = '''
 ### Interactive exploration 
 
 By now you should have an idea of how vehicle collisions in NYC have certain patterns and how it is possible to use these patterns for several things, 
-such as observing when coronavirus hit the hardest and Machine Learning. We can from the prior analysis indeed conclude that COVID had a *very* big impact
-on the amount of collisions in NYC, and also how 'dangerous' these collisions are, so now its your turn as the reader to investigate further! 
+such as observing when coronavirus hit the hardest and using Machine Learning to predict the amount of collisions on a given day. We can from the prior analysis indeed 
+conclude that COVID had a *very* big impact on the amount of collisions in NYC, and also how 'dangerous' these collisions are, so now its your turn as the reader to 
+investigate further! 
 
 Below is an interactive heatmap, which lets you explore the data yourself. You can choose which years you want to see data from, but also which kind of data. 
 The data is by default the total amount of collisions but can be changed to see numbers of persons injured etc. The radius of each point can also be increased: 
 '''
 
 heatmap_post_markdown = '''
-You can observe many interesting things by playing with the heatmap, and actually also see the things we put focus on thoroughout the analysis. You can see 
+You can observe many interesting things by playing with the heatmap, and actually also see the things we put focus on throughout the analysis. You can see 
 where most collisions occur, how it changes greatly when only looking at cyclicst or pedestrians but also see the change in collisions when changing the year.
 The total collisions is quite dense so if you change to the other types of data you should increase the radius a bit, so the points easier can be seen.  
 '''
@@ -214,6 +215,6 @@ final_words_markdown = '''
 &nbsp;
 ### Final words
 
-This website and the corresponding notebook is the result of 3 master students at Denmarks Technical University (DTU) and their final project in the Social 
+This website and the corresponding notebook is the result of 3 master students Anders Ottsen, Anders Lassen and Christian Jursitzky at Denmarks Technical University (DTU) and their final project in the Social 
 Data Analysis and Visualization course.
 '''

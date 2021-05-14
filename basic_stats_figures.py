@@ -95,7 +95,7 @@ def month_collisions_fig(df):
     
     collisions_months = df.groupby(df['Month']).size()
 
-    fig = px.bar(collisions_months, title='Collisions per month from 2012-2021', labels={'value':'Collisions'}, 
+    fig = px.bar(collisions_months, title='Collisions per month from 2012-2021', labels={'value':'Amount of collisions'}, 
         category_orders={'Month': ["January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"]}, hover_data={'variable':False})
 
@@ -107,8 +107,8 @@ def hour_collisions_fig(df):
 
     collisions_hoursoftheweek = df.groupby(df['HourOfTheWeek']).size()
 
-    fig = px.line(collisions_hoursoftheweek, title='Collisions per hour of the week', 
-        labels={'HourOfTheWeek': 'Hours of the week', 'value':'Collisions'}, hover_data={'variable':False})
+    fig = px.line(collisions_hoursoftheweek, title='Collisions per hour of the week from 2012-2021', 
+        labels={'HourOfTheWeek': 'Hours of the week', 'value':'Amount of collisions'}, hover_data={'variable':False})
     fig.update_layout(showlegend=False)
     return fig 
 

@@ -41,7 +41,7 @@ def covid19_nyc_fig(df):
     if (df_covid_data == None): 
         initialize_values(df)
 
-    fig = px.line(x=df_covid_data['DATE_OF_INTEREST'], y=df_covid_data['CASE_COUNT'],labels={'x': 'Dates', 'y': 'Amount of COVID19 cases'}, 
+    fig = px.line(x=df_covid_data['DATE_OF_INTEREST'], y=df_covid_data['CASE_COUNT'],labels={'x': 'Date', 'y': 'Amount of COVID19 cases'}, 
         title="Confirmed COVID19 cases in NYC plotted versus dates in 2020")
     return fig
 
@@ -93,8 +93,8 @@ def covid_19_killed_pr_col_fig(df, boroughs):
         go.Bar(name='No COVID', x=boroughs, y=persons_killed_per_collisions_borough_normal),
         go.Bar(name='COVID', x=boroughs, y=persons_killed_per_collisions_borough_covid)
     ])
-    fig.update_layout(title='Persons killed per collision',barmode='group', 
-        legend=dict(orientation="h",yanchor="bottom",y=1.02,xanchor="right",x=1),
+    fig.update_layout(title='Persons killed per collision across boroughs',barmode='group', yaxis_title='Persons killed per collision',
+        xaxis_title='Borough',legend=dict(orientation="h",yanchor="bottom",y=1.02,xanchor="right",x=1), 
         margin=dict(l=0, r=0, t=100, b=100),
     )
     return fig 
@@ -109,8 +109,8 @@ def covid_19_injured_pr_col_fig(df, boroughs):
         go.Bar(name='No COVID', x=boroughs, y=persons_injured_per_collisions_borough_normal),
         go.Bar(name='COVID', x=boroughs, y=persons_injured_per_collisions_borough_covid)
     ])
-    fig.update_layout(title='Persons injured per collision',barmode='group', 
-        legend=dict( orientation="h",yanchor="bottom",y=1.02,xanchor="right",x=1),
+    fig.update_layout(title='Persons injured per collision across boroughs',barmode='group',  yaxis_title='Persons injured per collision',
+        xaxis_title='Borough',legend=dict( orientation="h",yanchor="bottom",y=1.02,xanchor="right",x=1),
         margin=dict(l=0, r=0, t=100, b=100),
         )
     return fig 
@@ -131,7 +131,7 @@ def covid_19_crashes_factors_fig(df):
         go.Bar(name='COVID', x=factor_1_c.index[-n:-1], y=factor_1_c.values[-n:-1]/crash_count_covid*100)
     ])
     # Change the bar mode
-    fig.update_layout(title='Factors for Crashes',yaxis_title='Percent of Total Number of Crashes' ,barmode='group',
+    fig.update_layout(title='Factors for Crashes',yaxis_title='Percent of Total Number of Crashes' ,barmode='group',xaxis_title='Collision factor',
         legend=dict( orientation="h",yanchor="bottom",y=1.02,xanchor="right",x=1), margin=dict(l=0, r=0, t=100, b=100),
     )
     return fig 
