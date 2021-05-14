@@ -2,21 +2,21 @@
 
 intro_markdown = '''
 Every year the New York Police Department publishes data for every motor vehicle collision in New York City, and has been doing so since 2012. 
-The dataset contains information about injuries and deaths caused by accidents involving cars, cycles and pedestrians in New York City (NYC). The timespan 
-ranges between the years 2012-2021 with 1,765,789 counts and 29 variables. This website sets out to investigate the different patterns which is hidden 
-behind the rather large amount of data, and more specifically it sets out to investigate how COVID-19 has affected the data. NYC was one of the cities 
+The dataset contains information on injuries and deaths caused by accidents involving cars, bicycles and pedestrians in New York City (NYC). The timespan 
+ranges between the years 2012-2021 with 1,765,789 counts and 29 variables. This website sets out to investigate the different patterns hidden 
+in the rather large amount of data, and more specifically it sets out to investigate how COVID-19 has affected the data. NYC was one of the cities 
 which was hit very hard by COVID-19 when it first started spreading around the world in March 2020. We want to explore and show you exactly how much this 
 pandemic has meant for vehicle collisions in a city as busy as the Big Apple. A notebook explaining and showing the code and ideas behind the visualizations for 
 this website can be found on deepnote [here](https://deepnote.com/project/Social-final-project-3g9PpVG0SxGUOlX_mQSFdg/%2Fsocial_data_explainer.ipynb). 
 If deepnote does not render it, it can also be found on nbviewer [here](https://nbviewer.jupyter.org/github/AndersBensen/python_101/blob/main/social_data_explainer_nyc_aac.ipynb).
 
-To get an initial overview of the data a so-called choropleth map is used. The map shows simply how many collisions there have been in each of the 5
-boroughs in New York City: 
+To get an initial overview of the data, a choropleth map is used. The map simply shows how many collisions there have been in each of the 5
+boroughs in New York City:
 '''
 
 intro_post_choro = '''
-It is possible to hover over the colored areas, to see the exact number of collisions. In general all plots on the websites can be hovered over, and
-some things can even be toggled. 
+It is possible to hover over the colored areas to see the exact number of collisions. In general all plots on the websites can be hovered, and
+some things can even be toggled.
 
 From the plot we can see that Brooklyn has the most vehicle collisions with around ~383k. Queens comes in second with ~327k, then Manhattan with ~285k, 
 Bronx with ~176k and finally Staten Island with ~52k. Brooklyn is also the borough with the largest population, whereas Staten Island has the smallest 
@@ -30,14 +30,14 @@ bs_intro_markdown = '''
 &nbsp;
 ### Initial statistics and plots 
 
-The relative danger of collisions can be seen as the average amount of persons injured or killed per collision. The two plots below displays 
-the relative danger of collisions in each of the five boroughs. This allows comparison of the relative danger of the traffic in the five boroughs:
+The relative danger of collisions can be seen as the average amount of persons injured or killed per collision. The two plots below display 
+the relative danger of collisions in each of the five boroughs. This allows comparison of the relative danger of traffic in the five boroughs:
 &nbsp;
 '''
 
 bs_intro_post_markdown = '''
-The left bar plot shows the amount of persons killed relative to the amount of crashes in each borough. The right bar plot shows the amount persons 
-injured relative to the amount of crashes in each borough. These statistics are important, given that the plots are made relative to the amount of 
+The left bar plot shows the amount of persons killed relative to the amount of collisions in each borough. The right bar plot shows the amount persons 
+injured relative to the amount of collisions in each borough. These statistics are important, given that the plots are made relative to the amount of 
 collisions in each borough making the deaths and injuries comparable across boroughs. This allows the viewer to get an idea of what the outcome of 
 an average collision in any of the five boroughs of NYC is likely to be.
 
@@ -56,7 +56,7 @@ Motorist. The Person category above is a combination of those three categories:
 
 bs_months_pre_markdown = '''
 The plots show key differences in how the different modes of transport play into danger levels of collisions in the five boroughs. In the Manhattan borough, you are 
-much less likely to be injured in a collision as a motorist compared to the other boroughs.  In the Staten Island borough motorists are more likely to be 
+much less likely to be injured in a collision as a motorist compared to the other boroughs. In the Staten Island borough motorists are more likely to be 
 injured in a collision than cyclists and pedestrians. This does not mean, that cyclists and pedestrians are not injured when involved in collisions but is 
 likely to be due to a higher amount of collisions involving only motorists.
 
@@ -65,9 +65,9 @@ To see whether there is a difference in when the collisions happen throughout th
 
 bs_months_post_markdown = '''
 The months are generally quite even in the amount of collisions. It is however clear that a few months, namely April and February are underrepresented comparatively. 
-It also seems that more crashes happen in the second half of the year. The months from January to June all have fewer collisions than the months from July to December.
+It also seems that more collisions happen in the second half of the year. The months from January to June all have fewer collisions than the months from July to December.
 
-Collision patterns could also be hidden in the hours during the week. To investigate this we plot the hours of the week with the amount of collisions each hour: 
+Collision patterns could also be hidden in the hours during the week. To investigate this we plot the hours of the week with the amount of collisions each hour:
 '''
 
 bs_hours_weekly_markdown = '''
@@ -95,44 +95,44 @@ cov_post_intro_markdown = '''
 So from the data we can see that the pandemic started in march, and then grows extremely fast and peaks at around 6000 cases in April. Then it slows down and rises again 
 in October. Sidenote: A clear weekly pattern can be observed in the case count, however, this is not subject of investigation.
 
-To see if (and if, then how big) a impact COVID had on the amount of daily vehicle collisions, we plot the collisions each day from 2012 to 2021: 
+To see if (and if, then how large) an impact COVID-19 had on the amount of daily vehicle collisions, we plot the collisions each day from 2012 to 2021: 
 '''
 
 cov_incidents_post_markdown = ''' 
 The above plot shows how COVID-19 has affected the number of collisions in NYC. Along the x-axis we have the dates from 2012 to 2021, where from 2012 to March 2020 is marked in 
 green for pre-covid and from March 2020 to March 2021 is marked in red for during covid. The y-axis shows count per day, which can either be collions per day or injuries 
 per day. The blue dots show the amount collision per day and can clearly be seen to drop a lot after the first confirmed COVID-19 case. The red dots show the injured persons 
-per day, and also drops slightly after the onset of COVID-19 but in no way as much as the collision count per day. So it actually seems like the gap between amount of 
-collisions and amount of injured persons have become smaller since March 1st. 
+per day, and also drops slightly after the onset of COVID-19 but in no way as much as the collision count per day. So it actually seems like the gap between the amount of 
+collisions and the amount of injured persons have become smaller since March 1st.
 
-We plot the confirmed 19-cases on top of the red part of the above plot, to see if there seems to be a pattern between the two: 
+We plot the confirmed cases on top of the red part of the above plot, to see if there seems to be a pattern between the two: 
 '''
 
 cov_change_post_markdown = '''
-The plot shows the impact of COVID-19 on the number of collisions and injured persons. The x-axis shows the months from february 2020 (slightly before COVID) to januar 2021 
-(slightly after our COVID data). The y-axes is actually two fold here, where the left axis shows vehicle collisions (blue dots) and injured persons (red dots) per day and 
-the right axis shows the number of daily COVID cases (green line). We can see that initially when the number corona cases grows, the number of collisions and injuries falls.
+The plot shows the impact of COVID-19 on the number of collisions and injured persons. The x-axis shows the months from february 2020 (slightly before COVID-19) to januar 2021 
+(slightly after our COVID-19 data). The y-axes is actually two fold here, where the left axis shows vehicle collisions (blue dots) and injured persons (red dots) per day and 
+the right axis shows the number of daily COVID-19 cases (green line). We can see that initially when the number corona cases grows, the number of collisions and injuries falls.
 And when corona cases per day slows down the number of collisions and injured persons per day grows. So there is some kind of inverse proportionality between collisions and 
 corona cases. This makes good sense, as when the pandemic starting getting real bad in NYC, restrictions were being enforced. More people stayed in and thus less collisions 
 (and less injuries related to collisions because of that) is the result. 
 
-So we talked about the gap between injuries and collisions became smaller doing COVID, but can we measure exactly how much? In the plots below we explore this: 
+So we talked about the gap between injuries and collisions became smaller doing COVID-19, but can we measure exactly how much? In the plots below we explore this: 
 '''
 
 cov_kills_pre_markdown = '''
-The left plot shows the persons killed per collision in each of the five NYC boroughs, where the blue bars are the numbers pre COVID and the red bars are the numbers during
-COVID. The right plot shows the persons injured per collision, again in each of the boroughs both before and during the pandemic. So from this we can definetely see that 
-there is a difference in the relative danger when in a collision before and after COVID. The percentage of people dying in a collision grew significantly in all boroughs 
-when COVID hit and so did the percentage of people injured in a collision. This is a bit suprising, what exactly happened during COVID-19 that made collisions more 'dangerous'?
+The left plot shows the persons killed per collision in each of the five NYC boroughs, where the blue bars are the numbers pre COVID-19 and the red bars are the numbers during
+COVID-19. The right plot shows the persons injured per collision, again in each of the boroughs both before and during the pandemic. So from this we can definitely see that 
+there is a difference in the relative danger when in a collision before and after COVID-19. The percentage of people dying in a collision grew significantly in all boroughs 
+when COVID-19 hit and so did the percentage of people injured in a collision. This is a bit suprising, what exactly happened during COVID-19 that made collisions more 'dangerous'?
 
-To investigate this phenomena related to more dangerous crashes we look at the factors for crashes: 
+To investigate this phenomena related to more dangerous crashes we look at the factors for crashes:
 '''
 
 cov_outro_markdown = '''
-The plot shows the reason specified for why a vehicle collision happened, before and during COVID. The x-axis shows the different categories of reasons for the collision, 
+The plot shows the reason specified for why a vehicle collision happened, before and during COVID-19. The x-axis shows the different categories of reasons for the collision, 
 and the y-axis shows the percentage that the category was responsible of. The most popular collision reason has been removed since it is simply called 'unspecified' and
-is thus not very interesting. The most common reason is simply driver distraction, which rose a bit during COVID. It is difficult to see exactly from this what could
-cause the increase in danger, but it has been investigated further from news articles: 
+is thus not very interesting. The most common reason is simply driver distraction, which rose a bit during COVID-19. It is difficult to see exactly from this what could
+cause the increase in danger, but it has been investigated further from news articles:
 
 Seeing as NYC was hit hard by COVID-19 and many people worked from home, the amount of collisions dropped significantly, so why did the relative danger 
 rise? In the article "*Why Emptier Streets Meant an Especially Deadly Year for Traffic Deaths*"[[4]](https://www.nytimes.com/2021/01/01/nyregion/nyc-traffic-deaths.html) 
@@ -151,8 +151,8 @@ ml_intro_markdown = '''
 &nbsp;
 ### Using Machine Learning to predict collisions  
 
-As it can be seen from the prior analysis there definetely is temporal and geospatial patterns regarding collisions and injuries. 
-We could also see from the COVID-19 investigation, that COVID-19 definetely had an impact on the amount collisions and related fatalities in NYC. 
+As it can be seen from the prior analysis there definitely is temporal and geospatial patterns regarding collisions and injuries. 
+We could also see from the COVID-19 investigation, that COVID-19 definitely had an impact on the amount collisions and related fatalities in NYC. 
 To further investigate these patterns, we will use a Machine Learning model to see if we can predict how many collisions there is on a given day. 
 Afterward we will try to add COVID-19 data in NYC from the same dates, to see if that can improve the performance of our model. 
 The data we are prediction upon is restriced to 2020, so we later can predict on the same data when merging with the COVID-19 dataset. 
