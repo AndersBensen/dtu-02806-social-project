@@ -95,7 +95,7 @@ def month_collisions_fig(df):
     
     collisions_months = df.groupby(df['Month']).size()
 
-    fig = px.bar(collisions_months, title='Collisions per month', labels={'value':'Collisions'}, 
+    fig = px.bar(collisions_months, title='Collisions per month from 2012-2021', labels={'value':'Collisions'}, 
         category_orders={'Month': ["January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"]}, hover_data={'variable':False})
 

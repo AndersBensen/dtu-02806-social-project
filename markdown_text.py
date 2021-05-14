@@ -88,7 +88,7 @@ cov_intro_markdown = '''
 The first confirmed case of COVID-19 in New York City was found on the 1st of March in 2020. A 39 year old woman contracted the virus while traveling 
 abroad in Iran [[3]](https://www.nbcnewyork.com/news/coronavirus/person-in-nyc-tests-positive-for-covid-19-officials/2308155/). Therefore, we are dividing 
 the data into two sets by this date and will refer to them from now on as 'NO COVID' and 'COVID'. Below you can see the evolution of the confirmed COVID-19 cases 
-in NYC plotted versus dates in 2020 starting with the 1st of March and ending at the 3th of December. 
+in NYC plotted versus dates in 2020 starting with the 1st of March and ending at the 3rd of December. 
 '''
 
 cov_post_intro_markdown = '''
